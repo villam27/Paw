@@ -21,6 +21,6 @@ if(BUILD_TESTS)
     set_target_properties(${MODULE_NAME_TEST} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/tests
     )
-    target_link_libraries(${MODULE_NAME_TEST} gtest gtest_main ${MODULE_NAME} lua_static LuaC)
+    target_link_libraries(${MODULE_NAME_TEST} gtest gtest_main ${MODULE_NAME} lua_static Config LuaC)
     add_test(NAME ${MODULE_NAME_TEST} COMMAND ${MODULE_NAME_TEST})
 endif()

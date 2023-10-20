@@ -84,6 +84,10 @@ private:
 	std::unordered_map<std::string, Animation> _animations;
 	int _r;
 
+private:
+    Sheet		ParseSheet(void);
+	Animation	ParseAnim(void);
+
 public:
     /**
      * @brief Initializes a Config object from res/config.lua.

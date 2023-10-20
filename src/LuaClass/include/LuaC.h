@@ -71,6 +71,72 @@ public:
      * @brief Print the Lua stack.
     */
     void DumpStack();
+
+public:
+    //  Todo: Change later
+    template<typename T>
+	T			GetNumberFromTable(const std::string &field, T def)
+	{
+		lua_pushstring(_L, field.c_str());
+		lua_gettable(_L, -2);
+		if (lua_isnumber(_L, -1))
+			def = (T)lua_tonumber(_L, -1);
+		else
+			std::cerr << "[WARN]	No value found for " << field
+						<< ", value is set to " << def << std::endl;
+		lua_pop(_L, 1);
+		return (def);
+	}
+
+	template<typename T>
+	T			GetNumberFromTable(const std::string& field, T def, T min, T max)
+	{
+		T	tmp;
+
+		lua_pushstring(_L, field.c_str());
+		lua_gettable(_L, -2);
+		if (lua_isnumber(_L, -1))
+		{
+			tmp = (T)lua_tonumber(_L, -1);
+			if (tmp >= min && tmp <= max)
+				def = tmp;
+			else
+				std::cerr << "[WARN]	Value out of range for " << field
+				<< ", value is set to " << def << std::endl;
+		}
+		else
+			std::cerr << "[WARN]	No value found for " << field
+			<< ", value is set to " << def << std::endl;
+		lua_pop(_L, 1);
+		return (def);
+	}
+
+	template<typename T>
+	T			GetNumberFromTable(const int& idx, T def)
+	{
+		lua_pushinteger(_L, idx);
+		lua_gettable(_L, -2);
+		if (lua_isnumber(_L, -1))
+			def = (T)lua_tonumber(_L, -1);
+		else
+			std::cerr << "[WARN]	No value found for " << idx
+			<< ", value is set to " << def << std::endl;
+		lua_pop(_L, 1);
+		return (def);
+	}
+
+	std::string	GetStrFromTable(const std::string& field, std::string def)
+	{
+		lua_pushstring(_L, field.c_str());
+		lua_gettable(_L, -2);
+		if (lua_isstring(_L, -1))
+			def = lua_tostring(_L, -1);
+		else
+			std::cerr << "[WARN]	No value found for " << field
+			<< ", value is set to " << def << std::endl;
+		lua_pop(_L, 1);
+		return (def);
+	}
 };
 
 #endif // LUAC_H
