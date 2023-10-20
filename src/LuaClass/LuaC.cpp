@@ -13,7 +13,7 @@ LuaC::~LuaC() {
 }
 
 bool LuaC::LoadScript(const std::string &path) {
-    int r = luaL_loadfile(_L, path.c_str());
+    int r = luaL_dofile(_L, path.c_str());
     return CheckLua(r);
 }
 
@@ -41,30 +41,31 @@ bool LuaC::CallFunction(const std::string &functionName, int numArgs, int numRes
 }
 
 void LuaC::DumpStack() {
-    int i;
-    int top = lua_gettop(_L);
+	int top;
 
-    std::cout << "\n>>	LUA	STACK	<<\n" << std::endl;
-    for (i = 1; i <= top; i++) {
-        int t = lua_type(_L, i);
-        switch (t) {
-            case LUA_TSTRING:
-                std::cout << lua_tostring(_L, i) << std::endl;
-                break;
-            case LUA_TBOOLEAN:
-                std::cout << (lua_toboolean(_L, i) ? "true" : "false") << std::endl;
-                break;
-            case LUA_TNUMBER:
-                std::cout << lua_tonumber(_L, i) << std::endl;
-                break;
-            case LUA_TNIL:
-                std::cout << "nil";
-                break;
-            default:
-                std::cout << lua_typename(_L, t) << std::endl;
-                break;
-        }
-        std::cout << " ";
-    }
-    std::cout << "\n>>	END	STACK	<<\n" << std::endl;
+	std::cout << "\n>>	LUA	STACK	<<\n" << std::endl;
+	top = lua_gettop(_L);
+	for (int i = 1; i <= top; i++)
+	{
+		std::cout << i << " " << luaL_typename(_L, i);
+		switch (lua_type(_L, i))
+		{
+		case LUA_TNUMBER:
+			std::cout << lua_tonumber(_L, i) << std::endl;
+			break;
+		case LUA_TSTRING:
+			std::cout << lua_tostring(_L, i) << std::endl;
+			break;
+		case LUA_TBOOLEAN:
+			std::cout << (lua_toboolean(_L, i) ? "true" : "false") << std::endl;
+			break;
+		case LUA_TNIL:
+			std::cout << "nil" << std::endl;
+			break;
+		default:
+			std::cout << lua_topointer(_L, i)  << std::endl;
+			break;
+		}
+	}
+	std::cout << "\n>>	END	STACK	<<\n" << std::endl;
 }
