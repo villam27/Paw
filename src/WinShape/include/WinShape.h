@@ -58,15 +58,15 @@ public:
 
 	/**
 	 * @brief Gets the current rect.
-	 * @return The current rect.
+	 * @return A pointer to the src current rect.
 	*/
-	SDL_Rect			GetCurRect(void);
+	SDL_Rect			*GetCurRect(void);
 
 	/**
 	 * @brief Gets the current destination rect.
-	 * @return The current destination rect.
+	 * @return A pointer to the dest destination rect.
 	*/
-	SDL_Rect			GetCurDstRect(void);
+	SDL_Rect			*GetCurDstRect(void);
 
 	/**
 	 * @brief Gets the current surface index.

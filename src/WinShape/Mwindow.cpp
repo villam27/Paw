@@ -30,7 +30,7 @@ void	Mwindow::CreateWin(Config* conf)
 		throw std::runtime_error("Mwindow: " + std::string(SDL_GetError()));
 	_shape.mode = ShapeModeColorKey;	SET_COLOR_KEY(_shape.parameters.colorKey);
 	_winShape.InitMwinShape(_conf, _ren);
-	SDL_SetWindowSize(_win, _winShape.GetCurDstRect().w, _winShape.GetCurDstRect().h);
+	SDL_SetWindowSize(_win, _winShape.GetCurDstRect()->w, _winShape.GetCurDstRect()->h);
 	SDL_SetWindowPosition(_win, 50, 50);
 	if (SDL_SetWindowShape(_win, _winShape.GetCurSurf(), &_shape))
 		throw std::runtime_error("Mwindow: " + std::string(SDL_GetError()));
@@ -59,10 +59,12 @@ bool	Mwindow::Run(void)
 			}
 		}
 		SDL_RenderClear(_ren);
-		SDL_RenderCopy(_ren, _winShape.GetTexture(), &_winShape.GetCurRect(), &_winShape.GetCurDstRect());
+		SDL_RenderCopy(_ren, _winShape.GetTexture(), _winShape.GetCurRect(), _winShape.GetCurDstRect());
 		SDL_RenderPresent(_ren);
 		_winShape.ProcessAnimation(fixed_interval);
-		SDL_SetWindowSize(_win, _winShape.GetCurDstRect().w, _winShape.GetCurDstRect().h);
+		SDL_GetGlobalMouseState(&_x, &_y);
+		SDL_SetWindowPosition(_win, _x, _y);
+		SDL_SetWindowSize(_win, _winShape.GetCurDstRect()->w, _winShape.GetCurDstRect()->h);
 		if (SDL_SetWindowShape(_win, _winShape.GetCurSurf(), &_shape))
 			std::cerr << "[WARN]	Unable to change the shape" << std::endl;
 		after = SDL_GetTicks();

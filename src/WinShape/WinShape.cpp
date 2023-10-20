@@ -86,24 +86,18 @@ SDL_Surface* MwinShape::GetCurSurf(void)
 	return (_surfaces.at(_current));
 }
 
-SDL_Rect MwinShape::GetCurRect(void)
+SDL_Rect *MwinShape::GetCurRect(void)
 {
 	if (_rects.size() == 0)
-	{
-		SDL_Rect	r = {0, 0, 0, 0};
-		return (r);
-	}
-	return (_rects.at(_current));
+		return (NULL);
+	return (&_rects.at(_current));
 }
 
-SDL_Rect MwinShape::GetCurDstRect(void)
+SDL_Rect *MwinShape::GetCurDstRect(void)
 {
 	if (_dstRects.size() == 0)
-	{
-		SDL_Rect	r = { 0, 0, 0, 0 };
-		return (r);
-	}
-	return (_dstRects.at(_current));
+		return (NULL);
+	return (&_dstRects.at(_current));
 }
 
 size_t& MwinShape::GetCurrent(void)
