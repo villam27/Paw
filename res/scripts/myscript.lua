@@ -1,0 +1,1 @@
+--	template script for Minou

@@ -159,22 +159,22 @@ public:
     /**
      * @brief Print All Data.
     */
-	void DumpAll(void);
+	void DumpAll(void) {}
 
     /**
      * @brief Print Application Data.
     */
-	void DumpAppData(void);
+	void DumpAppData(void) {}
 
     /**
      * @brief Print Sprite Sheet Data.
     */
-    void DumpSheets(void);
+    void DumpSheets(void) {}
 
     /**
      * @brief Print Animation Data.
     */
-	void DumpAnimation(void);
+	void DumpAnimation(void) {}
 };
 
 #endif // CONFIG_H
