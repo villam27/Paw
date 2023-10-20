@@ -9,13 +9,27 @@ extern "C" {
 #define	DEFAULT_SIZE 32
 #define	SET_COLOR_KEY(c_key) c_key.r = 42; c_key.g = 42; c_key.b = 42; c_key.a = 255;
 
+/**
+ * @class Mwindow
+ * @brief Represents a window.
+*/
 class Mwindow
 {
 public:
 	Mwindow();
 	~Mwindow(void);
 
+	/**
+	 * @brief Creates a window.
+	 * @param conf The Config object.
+	 * @throw std::runtime_error if the window could not be created.
+	*/
 	void	CreateWin(Config* conf);
+
+	/**
+	 * @brief Runs the window.
+	 * @return True if the window is running, false otherwise.
+	*/
 	bool	Run(void);
 
 private:
