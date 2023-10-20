@@ -6,4 +6,5 @@ include(cmake/sdl2.cmake)
 
 add_subdirectory(src/mod1)
 add_subdirectory(src/Lua)
+add_subdirectory(src/LuaClass)
 add_subdirectory(src/main)
