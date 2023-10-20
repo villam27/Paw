@@ -11,7 +11,7 @@ extern "C" {
 
 /**
  * @class LuaC
- * @brief Represents a C++ interface for working with Lua scripting.
+ * @brief A C++ interface for working with Lua scripting.
  */
 class LuaC {
 private:
@@ -20,6 +20,7 @@ private:
 public:
     /**
      * @brief Initializes a LuaC object.
+     * @throw std::runtime_error if the Lua state could not be created.
      */
     LuaC();
 
@@ -56,6 +57,15 @@ public:
      * @return True if r == LUA_OK, false otherwise.
     */
     bool CheckLua(int r);
+
+    /**
+     * brief Calls a Lua function.
+     * @param functionName The name of the function.
+     * @param nArgs The number of arguments.
+     * @param nResults The number of results.
+     * @return True if the function was called successfully, false otherwise.
+    */
+    bool CallFunction(const std::string &functionName, int nArgs, int nResults);
 
     /**
      * @brief Print the Lua stack.
