@@ -14,8 +14,8 @@ public:
 	MwinShape();
 	~MwinShape();
 
-	bool				InitMwinShape(Config *c, SDL_Renderer* ren);
-	bool				PreprocessFrames(void);
+	void	InitMwinShape(Config *c, SDL_Renderer* ren);
+	void				PreprocessFrames(void);
 
 	const std::string&	GetName(void);
 	SDL_Surface*		GetSurface(void);	//	Return the original surface

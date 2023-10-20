@@ -15,7 +15,7 @@ MwinShape::~MwinShape()
 		SDL_FreeSurface(*i);
 }
 
-bool MwinShape::InitMwinShape(Config* c, SDL_Renderer *ren)
+void MwinShape::InitMwinShape(Config* c, SDL_Renderer *ren)
 {
 	std::string	tmpLocation;
 
@@ -24,18 +24,17 @@ bool MwinShape::InitMwinShape(Config* c, SDL_Renderer *ren)
 	_scale = c->GetAppData()->scale;
 	_name = _s->file;
 	tmpLocation.append("res/assets/sprites/").append(_name);
-	std::cout << "tmp loc " << tmpLocation << std::endl;
 	_orgSurf = IMG_Load(tmpLocation.c_str());
 	if (!_orgSurf)
-		return (false);
+		throw std::runtime_error("MwinShape: Unable to load the surface from the spritesheet " + _name);
 	_texture = SDL_CreateTextureFromSurface(ren, _orgSurf);
 	if (!_texture)
-		return (false);
+		throw std::runtime_error("MwinShape: Unable to create the texture from the surface");
 	_a = _conf->GetAnimationPtr("Lick");
-	return (PreprocessFrames());
+	PreprocessFrames();
 }
 
-bool MwinShape::PreprocessFrames(void)
+void MwinShape::PreprocessFrames(void)
 {
 	for (size_t i = 0; i < _s->sprites.size(); i++)
 	{
@@ -55,12 +54,14 @@ bool MwinShape::PreprocessFrames(void)
 		_dstRects.push_back(dr);
 		s = SDL_CreateRGBSurface(0, dr.w, dr.h, 32, 0, 0, 0, 0);
 		if (!s)
-			return (false);
+			throw std::runtime_error("MwinShape: Unable to create surface");
 		if (SDL_BlitScaled(_orgSurf, &r, s, &dr))
-			return (SDL_FreeSurface(s), false);
+		{
+			SDL_FreeSurface(s);
+			throw std::runtime_error("MwinShape: Unable to blit the surface");
+		}
 		_surfaces.push_back(s);
 	}
-	return (true);
 }
 
 const std::string& MwinShape::GetName(void)

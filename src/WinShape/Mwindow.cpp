@@ -19,25 +19,22 @@ Mwindow::~Mwindow()
 	SDL_Quit();
 }
 
-bool	Mwindow::CreateWin(Config* conf)
+void	Mwindow::CreateWin(Config* conf)
 {
 	_conf = conf;
 	_win = SDL_CreateShapedWindow("Minou", 0, 0, DEFAULT_SIZE, DEFAULT_SIZE, SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALWAYS_ON_TOP | SDL_WINDOW_INPUT_FOCUS);
 	if (!_win)
-		return (false);
+		throw std::runtime_error("Mwindow: " + std::string(SDL_GetError()));
 	_ren = SDL_CreateRenderer(_win, -1, SDL_RENDERER_ACCELERATED);
 	if (!_ren)
-		return (SDL_DestroyWindow(_win), false);
+		throw std::runtime_error("Mwindow: " + std::string(SDL_GetError()));
 	_shape.mode = ShapeModeColorKey;	SET_COLOR_KEY(_shape.parameters.colorKey);
-	if (_winShape.InitMwinShape(_conf, _ren) == false)
-		return (false);
-	std::cout << _winShape.GetCurDstRect().w << " " << _winShape.GetCurDstRect().h << std::endl;
+	_winShape.InitMwinShape(_conf, _ren);
 	SDL_SetWindowSize(_win, _winShape.GetCurDstRect().w, _winShape.GetCurDstRect().h);
 	SDL_SetWindowPosition(_win, 50, 50);
 	if (SDL_SetWindowShape(_win, _winShape.GetCurSurf(), &_shape))
-		std::cout << "[WARN]	Unable to change the shape" << std::endl;
+		throw std::runtime_error("Mwindow: " + std::string(SDL_GetError()));
 	_running = true;
-	return (true);
 }
 
 bool	Mwindow::Run(void)
@@ -67,7 +64,7 @@ bool	Mwindow::Run(void)
 		_winShape.ProcessAnimation(fixed_interval);
 		SDL_SetWindowSize(_win, _winShape.GetCurDstRect().w, _winShape.GetCurDstRect().h);
 		if (SDL_SetWindowShape(_win, _winShape.GetCurSurf(), &_shape))
-			std::cout << "[WARN]	Unable to change the shape" << std::endl;
+			std::cerr << "[WARN]	Unable to change the shape" << std::endl;
 		after = SDL_GetTicks();
 		interval = after - before;
 		if (interval < fixed_interval)

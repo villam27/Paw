@@ -18,9 +18,12 @@ bool App::InitApp(void)
 		return (false);
 	}
 	_config.DumpAnimation();
-	if (_minou.CreateWin(&_config) == false)
-	{
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Minou", "Unable to create the window", NULL);
+
+	try {
+		_minou.CreateWin(&_config);
+	}
+	catch (std::exception &e) {
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Minou", e.what(), NULL);
 		return (false);
 	}
 	return (true);

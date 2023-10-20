@@ -15,7 +15,7 @@ public:
 	Mwindow();
 	~Mwindow(void);
 
-	bool	CreateWin(Config* conf);
+	void	CreateWin(Config* conf);
 	bool	Run(void);
 
 private:
