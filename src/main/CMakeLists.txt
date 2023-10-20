@@ -10,8 +10,10 @@ add_executable(${MAIN_NAME} main.cpp)
 
 target_link_libraries(${MAIN_NAME}
     PRIVATE
-    module1
     lua_static
+    WinShape
+    Config
+    LuaC
     ${SDL2_LIBRARIES}
 )
 

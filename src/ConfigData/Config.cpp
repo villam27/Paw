@@ -119,6 +119,11 @@ const std::unordered_map<std::string, Animation> *Config::GetAnimation(void)
 	return (&_animations);
 }
 
+const Animation *Config::GetAnimationPtr(const std::string &name)
+{
+	return (&_animations.at(name));
+}
+
 Sheet Config::ParseSheet(void)
 {
     lua_State   *L = _lua.GetLuaState();
