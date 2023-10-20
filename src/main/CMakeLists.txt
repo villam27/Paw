@@ -7,7 +7,6 @@ add_executable(${MAIN_NAME} main.cpp)
 target_link_libraries(${MAIN_NAME}
     PRIVATE
     module1
-    module2
     lua_static
     ${SDL2_LIBRARIES}
 )

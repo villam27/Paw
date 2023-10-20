@@ -1,5 +1,4 @@
 #include "module1.h"
-#include "module2.h"
 #include <iostream>
 extern "C" {
 #include <lua.h>
@@ -10,10 +9,8 @@ extern "C" {
 
 int main(int argc, char* argv[]) {
     Module1 module1Instance;
-    Module2 module2Instance;
 
     module1Instance.printMessage();
-    module2Instance.displayMessage();
 
         if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         fprintf(stderr, "SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
