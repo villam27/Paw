@@ -30,7 +30,7 @@ To welcome Paw to your desktop:
    cmake --build .
    ```
 
-   **Note:** Paw is currently compatible with Windows only. Support for other platforms is in development.
+   **Note:** Paw is currently compatible with **Windows** only. Support for other platforms is in development.
 
 3. **Let Paw Charm You:**
    - Run Paw and let it enchant you with its interactive features.

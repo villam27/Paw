@@ -1,7 +1,10 @@
 build/
+out/
 html/
 latex/
 xml/
 tags
 *~
 .obsidian
+.vscode
+.vs
