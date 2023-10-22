@@ -24,5 +24,5 @@ TEST_F(LuaCTest, MemoryLoad) {
 
 TEST_F(LuaCTest, FileLoad) {
     //  data folder must be in the same directory as the executable
-    EXPECT_TRUE(luaC->LoadScript("data/script.lua"));
+    EXPECT_TRUE(luaC->LoadConfig("data/script.lua"));
 }

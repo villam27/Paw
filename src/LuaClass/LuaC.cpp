@@ -12,15 +12,39 @@ LuaC::~LuaC() {
     lua_close(_L);
 }
 
-bool LuaC::LoadScript(const std::string &path) {
+bool LuaC::LoadConfig(const std::string &path) {
     int r = luaL_dofile(_L, path.c_str());
     return CheckLua(r);
+}
+
+void LuaC::LoadScript(const std::string &path) {
+	if (luaL_loadfile(_L, path.c_str()) || lua_pcall(_L, 0, 0, 0)) {
+        const char* errorMessage = lua_tostring(_L, -1);
+        throw std::runtime_error(errorMessage);
+    }
 }
 
 bool LuaC::LoadScriptFromMemory(const std::string &script) {
     int r = luaL_loadstring(_L, script.c_str());
     return CheckLua(r);
 }
+
+//	Add documentation
+void LuaC::PreLoadModule(const std::string &module) {
+	lua_getglobal(_L, "require");
+    lua_pushstring(_L, module.c_str());
+    lua_call(_L, 1, 1);
+}
+
+void LuaC::CallFunction(const std::string &functionName, const std::string &moduleName, int numArgs, int numResults) {
+	PreLoadModule(moduleName);
+    lua_getfield(_L, -1, functionName.c_str());
+    if (lua_isfunction(_L, -1)) {
+        lua_call(_L, numArgs, numResults);
+    }
+    lua_pop(_L, 1);
+}
+
 
 bool LuaC::CheckLua(int r) {
     if (r != LUA_OK) {
@@ -30,7 +54,7 @@ bool LuaC::CheckLua(int r) {
     return true;
 }
 
-bool LuaC::CallFunction(const std::string &functionName, int numArgs, int numResults) {
+bool LuaC::CallFunction__(const std::string &functionName, int numArgs, int numResults) {
     lua_getglobal(_L, functionName.c_str());
     DumpStack();
     if (!lua_isfunction(_L, -1))

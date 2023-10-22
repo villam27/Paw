@@ -2,12 +2,12 @@
 #include <iostream>
 
 Config::Config() {
-    if (!_lua.LoadScript("res/config.lua"))
+    if (!_lua.LoadConfig("res/config.lua"))
         throw new std::runtime_error("Config: Cannot load res/config.lua");
 }
 
 Config::Config(const std::string &path) {
-    if (!_lua.LoadScript(path.c_str()))
+    if (!_lua.LoadConfig(path.c_str()))
         throw new std::runtime_error(std::string("Config: Cannot load " + path));
 }
 

@@ -38,11 +38,18 @@ public:
     }
 
     /**
-     * @brief Loads a Lua script from a file.
-     * @param path The path to the Lua script.
+     * @brief Loads a Lua config from a file.
+     * @param path The path to the Lua config.
      * @return True if the script was loaded successfully, false otherwise.
     */
-    bool LoadScript(const std::string &path);
+    bool LoadConfig(const std::string &path);
+
+	/**
+	 * @brief Loads a Lua script from a file.
+	 * @param path The path to the Lua script.
+	 * @throw std::runtime_error if the script could not be loaded.
+	*/
+	void LoadScript(const std::string &path);
 
     /**
      * @brief Loads a Lua script from a string.
@@ -50,6 +57,10 @@ public:
      * @return True if the script was loaded successfully, false otherwise.
     */
     bool LoadScriptFromMemory(const std::string &script);
+
+	//	TODO: Add documentation
+	void PreLoadModule(const std::string &module);
+	void CallFunction(const std::string &functionName, const std::string &moduleName, int numArgs, int numResults);
 
     /**
      * @brief Checks the lua function return value and print errors if necessary.
@@ -65,7 +76,7 @@ public:
      * @param nResults The number of results.
      * @return True if the function was called successfully, false otherwise.
     */
-    bool CallFunction(const std::string &functionName, int nArgs, int nResults);
+    bool CallFunction__(const std::string &functionName, int nArgs, int nResults);
 
     /**
      * @brief Print the Lua stack.
